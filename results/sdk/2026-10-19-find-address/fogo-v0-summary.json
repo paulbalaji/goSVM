@@ -1,0 +1,172 @@
+{
+  "cases": 58,
+  "elf_sha256": "9f7de538948dd402ef6787aa5f24428f8f726b7575116e1d05f6af115337e395",
+  "max_cu_saved": 5233,
+  "median_cu_saved": 911,
+  "min_cu_saved": 407,
+  "profile": "fogo-v0",
+  "vectors": {
+    "empty": {
+      "bump": 253,
+      "find_cu": 5092,
+      "loop_cu": 5565,
+      "tries": 3
+    },
+    "fifteen-max": {
+      "bump": 252,
+      "find_cu": 6851,
+      "loop_cu": 12084,
+      "tries": 4
+    },
+    "hyperlane-00": {
+      "bump": 252,
+      "find_cu": 6681,
+      "loop_cu": 7964,
+      "tries": 4
+    },
+    "hyperlane-01": {
+      "bump": 255,
+      "find_cu": 2181,
+      "loop_cu": 3092,
+      "tries": 1
+    },
+    "hyperlane-02": {
+      "bump": 252,
+      "find_cu": 6681,
+      "loop_cu": 7964,
+      "tries": 4
+    },
+    "hyperlane-03": {
+      "bump": 254,
+      "find_cu": 3681,
+      "loop_cu": 4716,
+      "tries": 2
+    },
+    "hyperlane-04": {
+      "bump": 255,
+      "find_cu": 2181,
+      "loop_cu": 3092,
+      "tries": 1
+    },
+    "hyperlane-05": {
+      "bump": 255,
+      "find_cu": 2181,
+      "loop_cu": 3092,
+      "tries": 1
+    },
+    "hyperlane-06": {
+      "bump": 254,
+      "find_cu": 3681,
+      "loop_cu": 4716,
+      "tries": 2
+    },
+    "hyperlane-07": {
+      "bump": 254,
+      "find_cu": 3681,
+      "loop_cu": 4716,
+      "tries": 2
+    },
+    "hyperlane-08": {
+      "bump": 254,
+      "find_cu": 3681,
+      "loop_cu": 4716,
+      "tries": 2
+    },
+    "hyperlane-09": {
+      "bump": 255,
+      "find_cu": 2181,
+      "loop_cu": 3092,
+      "tries": 1
+    },
+    "hyperlane-10": {
+      "bump": 255,
+      "find_cu": 2181,
+      "loop_cu": 3092,
+      "tries": 1
+    },
+    "hyperlane-11": {
+      "bump": 254,
+      "find_cu": 3681,
+      "loop_cu": 4716,
+      "tries": 2
+    },
+    "hyperlane-12": {
+      "bump": 255,
+      "find_cu": 2181,
+      "loop_cu": 3092,
+      "tries": 1
+    },
+    "hyperlane-13": {
+      "bump": 255,
+      "find_cu": 2181,
+      "loop_cu": 3092,
+      "tries": 1
+    },
+    "hyperlane-14": {
+      "bump": 254,
+      "find_cu": 3681,
+      "loop_cu": 4716,
+      "tries": 2
+    },
+    "hyperlane-15": {
+      "bump": 255,
+      "find_cu": 2181,
+      "loop_cu": 3092,
+      "tries": 1
+    },
+    "hyperlane-16": {
+      "bump": 255,
+      "find_cu": 2181,
+      "loop_cu": 3092,
+      "tries": 1
+    },
+    "hyperlane-17": {
+      "bump": 255,
+      "find_cu": 2181,
+      "loop_cu": 3092,
+      "tries": 1
+    },
+    "hyperlane-18": {
+      "bump": 255,
+      "find_cu": 2181,
+      "loop_cu": 3092,
+      "tries": 1
+    },
+    "hyperlane-19": {
+      "bump": 253,
+      "find_cu": 5181,
+      "loop_cu": 6340,
+      "tries": 3
+    },
+    "hyperlane-20": {
+      "bump": 255,
+      "find_cu": 2181,
+      "loop_cu": 3092,
+      "tries": 1
+    },
+    "hyperlane-21": {
+      "bump": 253,
+      "find_cu": 5181,
+      "loop_cu": 6340,
+      "tries": 3
+    },
+    "hyperlane-22": {
+      "bump": 251,
+      "find_cu": 8181,
+      "loop_cu": 9588,
+      "tries": 5
+    },
+    "hyperlane-23": {
+      "bump": 253,
+      "find_cu": 5181,
+      "loop_cu": 6340,
+      "tries": 3
+    },
+    "one-byte": {
+      "bump": 255,
+      "find_cu": 2113,
+      "loop_cu": 2520,
+      "tries": 1
+    }
+  }
+}
