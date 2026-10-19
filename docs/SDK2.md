@@ -124,15 +124,17 @@ which runs `Process` in its own stack frame (a few CU per transaction); see the
 | Bound | goSVM | Runtime (Agave 3.0) |
 | --- | --- | --- |
 | Account metas per CPI | 64 (`solana.Invoke` 2006, `Metas.Add` 3002) | 255 (`MAX_ACCOUNTS_PER_INSTRUCTION`) |
-| Distinct accounts (account infos) | the incoming accounts, at most 32 | 64, or 128 with `increase_tx_account_lock_limit` |
+| Distinct accounts (account infos) | the incoming accounts, at most 32 (64 with `-max-accounts 64`) | 64, or 128 with `increase_tx_account_lock_limit` |
 | Signer groups | 4 (2007, `Signers.Add` 3003) | 16 (`MAX_SIGNERS`) |
 | Seeds per group, bytes per seed | 16, 32 (2007; `pda.Seeds` 3001) | 16, 32 (`MAX_SEEDS`, `MAX_SEED_LEN`) |
 | Encoded signer groups | 1,024 bytes (2007, 3003) | none |
 | Instruction data | 10,240 bytes (2008) | 10,240 |
 
 Every meta indexes the invocation's own accounts and `Invoke` passes those as
-the account infos, so a CPI names at most 32 distinct accounts, within every
-feature-set's account-info limit; more than 32 metas repeat accounts.
+the account infos, so a CPI names at most 32 distinct accounts (64 for a
+low-level program built with `-max-accounts 64`, the
+[64-account decoder](ACCOUNT_DECODER64.md)), within every feature-set's
+account-info limit; beyond that, metas repeat accounts.
 64 metas cover Hyperlane's Sealevel CPIs (22 for IGP `PayForGas` with quoted
 accounts, 17 for fee `QuoteFee`) with room for repeated references, and keep the
 C runtime's descriptor arrays (16 bytes per meta and per seed) in one SBF frame:
