@@ -7,6 +7,8 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"os"
+	"regexp"
+	"strings"
 	"testing"
 )
 
@@ -49,6 +51,25 @@ func loadCorpus(t *testing.T) []corpusEntry {
 		t.Fatalf("corpus has only %d programs", len(entries))
 	}
 	return entries
+}
+
+// findAddressRuntime is what solana.FindAddress adds to every program's C
+// (docs/SDK2.md); withoutFindAddress removes it, so the corpus proves the
+// rest is unchanged.
+var findAddressRuntime = []string{
+	"#define sol_find_pda ((u64 (*)(Seed *,u64,u8 *,u8 *,u8 *))0x48504a38ULL)\n",
+	"extern u64 sol_try_find_program_address(Seed *,u64,u8 *,u8 *,u8 *);\n",
+	"#define sol_find_pda sol_try_find_program_address\n",
+}
+
+var findAddressFunc = regexp.MustCompile(`(?s)// One syscall walks bumps 255\.\.1.*?static u64 sol_FindAddress\(.*?\n}\n\n`)
+
+func withoutFindAddress(c []byte) []byte {
+	text := findAddressFunc.ReplaceAllString(string(c), "")
+	for _, s := range findAddressRuntime {
+		text = strings.ReplaceAll(text, s, "")
+	}
+	return []byte(text)
 }
 
 // corpusChanges lists the recorded programs whose verdict changed on purpose
@@ -346,7 +367,7 @@ func TestCorpusMatchesPreCheckCompiler(t *testing.T) {
 			continue
 		}
 		if err == nil {
-			sum := sha256.Sum256(out)
+			sum := sha256.Sum256(withoutFindAddress(out))
 			if hex.EncodeToString(sum[:]) != e.CSHA256 {
 				t.Errorf("entry %d: emitted C changed (sha256 %x)", i, sum)
 			}
