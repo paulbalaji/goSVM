@@ -12,7 +12,7 @@
   "instruction": "",
   "handler": "",
   "result": "",
-  "sdk_sha256": "991b3d5c050f26b4bb595a537f8b0d325d4ec4161711574a84523f0f83397c64",
+  "sdk_sha256": "3766627e191caa0f0c01a97c7eab8faaff8088ae02287aff51081820b4a28699",
   "sdk_version": 2,
   "imports": {
     "model": "example.org/gosvm/fee-vault/model"

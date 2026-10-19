@@ -60,6 +60,7 @@ signer. The syscall costs 25,000 CU. Native contexts supply
 `RecoverSecp256k1 func(hash []byte, recoveryID uint64, signature []byte) ([]byte, uint64)`;
 a nil callback returns 2009. The [secp256k1 SBF test](../internal/compiler/secp256k1_sbf_test.go)
 compares recovered keys and statuses with an independent `math/big` oracle on
+fogo-v0 and solana-v3.
 
 `solana.Keccak256(c, input, offset, length, output, outOffset)` hashes
 `input[offset:offset+length]` with Keccak-256 as Ethereum does (the original
@@ -73,6 +74,20 @@ a CU per input byte on the pinned runners. Native contexts supply
 [Keccak SBF test](../internal/compiler/keccak_sbf_test.go) compares whole and
 partial inputs from 0 to 10,240 bytes with a reference implementation on
 fogo-v0 and solana-v3.
+
+`solana.Log(c, message)` writes `Program log: <message>`, as Rust's `msg!`
+does, using the `sol_log_` syscall (the larger of 100 CU and the message
+length). `solana.Log64(c, v0, v1, v2, v3, v4)` logs five words as
+`0x1, 0x2, 0x0, 0x0, 0x0` (`sol_log_64_`, 100 CU) and `solana.LogPubkey(c, key)`
+a 32-byte key in base58 (`sol_log_pubkey`, 100 CU); a key of another length
+returns 2019 without logging. They return 0 otherwise, so a call is an
+ordinary statement. Pass a string constant to `Log` to avoid allocating;
+`string(b)` copies `b` to the heap. The runtime fails the instruction when a
+message is not valid UTF-8 (`ProgramFailedToComplete`, with a `failed: invalid
+utf-8 ...` log line); the native SDK panics there. Native contexts receive the
+text after `Program log: ` through `WriteLog`; without it lines are discarded,
+since logging has no state to observe. Programs that do not log compile to the
+same C. See [examples/logging](../examples/logging/README.md).
 
 `pda.Seeds` supports `AddBytes`, `AddKey`, `AddByte`, `AddUint32` and `AddUint64`.
 Integer seeds use little-endian encoding. Each builder accepts at most 16 seeds
