@@ -128,6 +128,13 @@ func withoutFindAddress(c []byte) []byte {
 	return []byte(text)
 }
 
+// byteEqualWords matches the SBF branch that opt-byte-array-equal adds to
+// arrayN_equal for byte arrays (docs/GO_ARRAYS.md); withoutByteEqualWords
+// keeps only its #else branch, the loop recorded before the change.
+var byteEqualWords = regexp.MustCompile(`(?s)#ifdef __bpf__\nu64 d=0;\n.*?#else\n(.*?)#endif\n`)
+
+func withoutByteEqualWords(c []byte) []byte { return byteEqualWords.ReplaceAll(c, []byte("$1")) }
+
 // corpusChanges lists the recorded programs whose verdict changed on purpose
 // after the corpus was frozen, with the outcome the current compiler must
 // produce instead. The .gz is never edited; every other entry must still match
@@ -445,7 +452,7 @@ func TestCorpusMatchesPreCheckCompiler(t *testing.T) {
 			continue
 		}
 		if err == nil {
-			sum := sha256.Sum256(withoutMemorySyscalls(withoutRuntimeWords(withoutFindAddress(out))))
+			sum := sha256.Sum256(withoutMemorySyscalls(withoutRuntimeWords(withoutFindAddress(withoutByteEqualWords(out)))))
 			if hex.EncodeToString(sum[:]) != e.CSHA256 {
 				t.Errorf("entry %d: emitted C changed (sha256 %x)", i, sum)
 			}
