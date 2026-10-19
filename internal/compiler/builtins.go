@@ -14,15 +14,16 @@ var compilerBuiltins []byte
 // These are the runtime syscalls actually emitted by this frontend. Compiler
 // libcalls are linked locally, never admitted as if they were VM syscalls.
 var legacySyscalls = map[string]bool{
-	"abort":                      true,
-	"sol_create_program_address": true,
-	"sol_invoke_signed_c":        true,
-	"sol_sha256":                 true,
-	"sol_get_clock_sysvar":       true,
-	"sol_get_rent_sysvar":        true,
-	"sol_set_return_data":        true,
-	"sol_log_":                   true, // panic's log line (docs/ERROR_CONTRACT.md#panic)
-	"sol_memcpy_":                true, // the initialization image (docs/GO_GLOBALS.md#compile-time-evaluation)
+	"abort":                        true,
+	"sol_create_program_address":   true,
+	"sol_try_find_program_address": true, // solana.FindAddress
+	"sol_invoke_signed_c":          true,
+	"sol_sha256":                   true,
+	"sol_get_clock_sysvar":         true,
+	"sol_get_rent_sysvar":          true,
+	"sol_set_return_data":          true,
+	"sol_log_":                     true, // panic's log line (docs/ERROR_CONTRACT.md#panic)
+	"sol_memcpy_":                  true, // the initialization image (docs/GO_GLOBALS.md#compile-time-evaluation)
 }
 
 func undefinedSymbols(path string, dynamic bool) ([]string, error) {
